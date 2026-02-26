@@ -1,0 +1,60 @@
+---
+const beliefs = [
+  {
+    icon: `<svg class="w-5 h-5 text-theme-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+    </svg>`,
+    title: "AI should amplify, not replace",
+    description: "The best developer tools make humans more capable. We build orchestration layers that keep developers in the driver's seat while AI handles the implementation."
+  },
+  {
+    icon: `<svg class="w-5 h-5 text-theme-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+    </svg>`,
+    title: "Tools should be open and transparent",
+    description: "No black boxes. No vendor lock-in. Your code goes directly to AI providers through your own API keys. We don't sit in the middle."
+  },
+  {
+    icon: `<svg class="w-5 h-5 text-theme-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.58-3.18a1.5 1.5 0 01-.54-2.05l4.82-8.34a1.5 1.5 0 012.64 0l4.82 8.34a1.5 1.5 0 01-.54 2.05l-5.58 3.18a1.5 1.5 0 01-1.5 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 15.17V21" />
+    </svg>`,
+    title: "Purpose-built beats bolted-on",
+    description: "AI collaboration deserves its own interface, not a chat window stapled to an editor. We build from scratch, designed for how developers actually work with AI agents."
+  }
+];
+---
+
+<section class="py-24 px-6 relative">
+  <!-- Top accent line -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[rgba(231,159,116,0.2)] to-transparent"></div>
+
+  <div class="max-w-3xl mx-auto">
+    <!-- Section header -->
+    <div class="text-center mb-16 reveal-up">
+      <div class="section-badge">
+        <span class="section-badge-dot"></span>
+        Our Vision
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">What we believe</h2>
+    </div>
+
+    <!-- Belief items -->
+    <div class="space-y-0">
+      {beliefs.map((belief, i) => (
+        <div
+          class="belief-item flex gap-5 py-6 reveal-up"
+          style={`animation-delay: ${0.15 + i * 0.1}s; ${i < beliefs.length - 1 ? 'border-bottom: 1px solid var(--color-border);' : ''}`}
+        >
+          <div class="feature-icon flex-shrink-0 mt-0.5">
+            <Fragment set:html={belief.icon} />
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">{belief.title}</h3>
+            <p class="text-theme-secondary leading-relaxed">{belief.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,80 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Utpun Tech Labs builds open, purpose-built tools for AI-native developer workflows. Our flagship product, Molt Code, orchestrates AI coding agents." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b0907" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#faf7f4" media="(prefers-color-scheme: light)" />
+
+    <!-- Prevent flash of wrong theme -->
+    <script is:inline>
+      (function() {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://utpun.com" />
+    <meta property="og:site_name" content="Utpun Tech Labs" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="application-name" content="Utpun" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={`https://utpun.com${Astro.url.pathname}`} />
+    <title>{title}</title>
+
+    <!-- Structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Utpun Tech Labs Private Limited",
+          "alternateName": "Utpun",
+          "url": "https://utpun.com",
+          "logo": "https://utpun.com/favicon.svg",
+          "description": description,
+          "sameAs": [
+            "https://moltcode.com",
+            "https://github.com/moltcode/moltcode"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "name": "Utpun Tech Labs",
+          "url": "https://utpun.com"
+        }
+      ]
+    })} />
+  </head>
+  <body class="gradient-bg grid-pattern noise-overlay relative min-h-screen antialiased">
+    <slot />
+  </body>
+</html>

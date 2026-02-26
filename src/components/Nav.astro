@@ -1,0 +1,48 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 glass">
+  <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2.5 group">
+      <svg width="28" height="28" viewBox="0 0 64 64" class="rounded-lg shadow-sm">
+        <defs>
+          <linearGradient id="navBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#27272a"/>
+            <stop offset="100%" stop-color="#3f3f46"/>
+          </linearGradient>
+          <linearGradient id="navCopperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#b45309"/>
+            <stop offset="50%" stop-color="#d97706"/>
+            <stop offset="100%" stop-color="#92400e"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#navBgGrad)"/>
+        <path d="M 18 16 L 18 38 C 18 46 24 52 32 52 C 40 52 46 46 46 38 L 46 16"
+          fill="none"
+          stroke="url(#navCopperGrad)"
+          stroke-width="7"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+      </svg>
+      <span class="text-lg font-bold text-theme-primary group-hover:text-theme-accent transition-colors">Utpun</span>
+    </a>
+
+    <!-- Right side -->
+    <div class="flex items-center gap-3">
+      <a
+        href="https://moltcode.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium text-theme-secondary hover:text-theme-accent hover:bg-theme-accent/8 transition-all duration-200"
+      >
+        Molt Code
+        <svg class="w-3.5 h-3.5 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+        </svg>
+      </a>
+      <ThemeToggle />
+    </div>
+  </div>
+</nav>

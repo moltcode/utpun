@@ -1,0 +1,55 @@
+version: 1
+
+processes:
+  dev:
+    label: Astro Dev Server
+    command: npm
+    args: [run, dev, --, --port, "4322"]
+    description: Starts the Astro dev server with HMR on port 4322 (4321 is used by the Molt Code website)
+    auto_start: true
+    restart:
+      policy: on_failure
+      max_restarts: 3
+      backoff_ms: 2000
+    env:
+      NODE_ENV: development
+    tags: [group:dev]
+    health:
+      command: curl
+      args: [-sf, "http://localhost:4322/"]
+      interval_ms: 10000
+      grace_ms: 5000
+      timeout_ms: 3000
+
+  preview:
+    label: Astro Preview Server
+    command: npm
+    args: [run, preview, --, --port, "4322"]
+    description: Serves the production build locally for testing
+    restart:
+      policy: never
+    tags: [group:dev]
+
+scripts:
+  build:
+    label: Build Site
+    command: npm
+    args: [run, build]
+    description: Builds the static site to dist/
+
+  deploy:
+    label: Deploy to Cloudflare
+    command: npx
+    args: [wrangler, pages, deploy, dist]
+    description: Deploys the built site to Cloudflare Pages
+    confirm: true
+
+  install:
+    label: Install Dependencies
+    command: npm
+    args: [install]
+    description: Installs npm dependencies
+
+settings:
+  log_retention: 5000
+  shutdown_timeout_ms: 5000
