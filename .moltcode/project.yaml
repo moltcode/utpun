@@ -1,55 +1,49 @@
 version: 1
-
 processes:
   dev:
-    label: Astro Dev Server
+    args: [run, dev, "--", "--port", "4322"]
+    auto_start: false
     command: npm
-    args: [run, dev, --, --port, "4322"]
-    description: Starts the Astro dev server with HMR on port 4322 (4321 is used by the Molt Code website)
-    auto_start: true
-    restart:
-      policy: on_failure
-      max_restarts: 3
-      backoff_ms: 2000
     env:
       NODE_ENV: development
-    tags: [group:dev]
-    health:
+    health_check:
+      args: ["-sf", http://localhost:4322/]
       command: curl
-      args: [-sf, "http://localhost:4322/"]
-      interval_ms: 10000
       grace_ms: 5000
+      interval_ms: 10000
       timeout_ms: 3000
-
+    label: Astro Dev Server
+    oom_strategy: kill
+    restart:
+      backoff_ms: 2000
+      max_restarts: 3
+      policy: on_failure
+    tags: [group:dev]
   preview:
-    label: Astro Preview Server
+    args: [run, preview, "--", "--port", "4322"]
     command: npm
-    args: [run, preview, --, --port, "4322"]
     description: Serves the production build locally for testing
+    label: Astro Preview Server
     restart:
       policy: never
     tags: [group:dev]
-
 scripts:
   build:
-    label: Build Site
-    command: npm
     args: [run, build]
-    description: Builds the static site to dist/
-
-  deploy:
-    label: Deploy to Cloudflare
-    command: npx
-    args: [wrangler, pages, deploy, dist]
-    description: Deploys the built site to Cloudflare Pages
-    confirm: true
-
-  install:
-    label: Install Dependencies
     command: npm
+    description: Builds the static site to dist/
+    label: Build Site
+  deploy:
+    args: [wrangler, pages, deploy, dist]
+    command: npx
+    confirm: true
+    description: Deploys the built site to Cloudflare Pages
+    label: Deploy to Cloudflare
+  install:
     args: [install]
+    command: npm
     description: Installs npm dependencies
-
+    label: Install Dependencies
 settings:
   log_retention: 5000
   shutdown_timeout_ms: 5000
